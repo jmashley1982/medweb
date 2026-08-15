@@ -1,0 +1,7 @@
+node_modules/
+.cache/
+database.sqlite
+database.sqlite-journal
+screenshots/
+.agents/
+.local/

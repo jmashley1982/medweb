@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Page – STVE Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --green-dark: #1B5E44;
+      --green-mid:  #2E9E68;
+      --green-light:#E8F5EF;
+      --green-pale: #F4FAF7;
+      --text-dark:  #1A2E24;
+      --text-mid:   #4A6457;
+      --text-light: #7A9A8A;
+      --white:      #FFFFFF;
+      --border:     #D4E8DC;
+      --font: 'Inter', sans-serif;
+    }
+    body { font-family: var(--font); background: #EDF5EF; color: var(--text-dark); min-height: 100vh; }
+
+    .topbar {
+      background: var(--green-dark);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .topbar-left img { height: 36px; width: auto; border-radius: 6px; object-fit: contain; }
+    .topbar-title { color: #fff; font-weight: 700; font-size: 1rem; }
+    .topbar-crumb { color: rgba(255,255,255,0.5); font-size: 0.87rem; }
+    .topbar-crumb a { color: rgba(255,255,255,0.65); text-decoration: none; }
+    .topbar-crumb a:hover { color: #fff; }
+    .tbtn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 18px; border-radius: 999px; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; border: none; font-family: var(--font);
+      transition: all 0.2s;
+    }
+    .tbtn-ghost { background: transparent; color: rgba(255,255,255,0.7); }
+    .tbtn-ghost:hover { color: #fff; }
+
+    .page-wrap { max-width: 680px; margin: 0 auto; padding: 48px 28px; }
+
+    .page-heading { margin-bottom: 32px; }
+    .page-heading h1 { font-size: 1.9rem; font-weight: 800; color: var(--text-dark); }
+    .page-heading p { color: var(--text-mid); margin-top: 6px; font-size: 1rem; line-height: 1.7; }
+
+    .alert-error { background: #FEF2F2; border: 1px solid #FCA5A5; border-left: 4px solid #EF4444; color: #B91C1C; padding: 14px 20px; border-radius: 12px; font-size: 0.95rem; margin-bottom: 20px; }
+
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .card-header {
+      padding: 24px 32px;
+      border-bottom: 1px solid var(--border);
+      background: var(--green-pale);
+    }
+    .card-header h2 { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); }
+    .card-header p { font-size: 0.88rem; color: var(--text-light); margin-top: 4px; }
+    .card-body { padding: 32px; display: flex; flex-direction: column; gap: 22px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); }
+    .form-group input {
+      padding: 13px 18px;
+      font-size: 1.02rem;
+      font-family: var(--font);
+      border: 2px solid #D0DDD7;
+      border-radius: 12px;
+      outline: none;
+      color: var(--text-dark);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus { border-color: var(--green-mid); box-shadow: 0 0 0 4px rgba(46,158,104,0.1); }
+    .field-hint { font-size: 0.82rem; color: var(--text-light); }
+
+    .btn-create {
+      background: var(--green-dark);
+      color: #fff;
+      border: none;
+      padding: 15px 32px;
+      font-size: 1.02rem;
+      font-weight: 700;
+      font-family: var(--font);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 12px rgba(27,94,68,0.25);
+      align-self: flex-start;
+    }
+    .btn-create:hover { background: var(--green-mid); transform: translateY(-1px); }
+
+    .info-box {
+      background: var(--green-light);
+      border: 1px solid #A7D9BE;
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-top: 8px;
+    }
+    .info-box strong { color: var(--green-dark); }
+
+    @media (max-width: 640px) {
+      .topbar { padding: 0 16px; }
+      .page-wrap { padding: 24px 16px; }
+      .card-body { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="/logo.png" alt="STVE" onerror="this.style.display='none'">
+      <div>
+        <div class="topbar-title">South Texas Vascular</div>
+        <div class="topbar-crumb"><a href="/admin/dashboard">Dashboard</a> / Add New Page</div>
+      </div>
+    </div>
+    <a href="/admin/dashboard" class="tbtn tbtn-ghost">← Dashboard</a>
+  </div>
+
+  <div class="page-wrap">
+    <div class="page-heading">
+      <h1>Add a New Page</h1>
+      <p>Create a new page that will automatically appear in your website's navigation menu with the same design as all other pages.</p>
+    </div>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert-error">⚠ &nbsp;<%= error %></div>
+    <% } %>
+
+    <div class="card">
+      <div class="card-header">
+        <h2>New Page Details</h2>
+        <p>You can edit the content, images, and text after creating the page.</p>
+      </div>
+      <div class="card-body">
+        <form action="/admin/add" method="POST" style="display:contents;">
+          <div class="form-group">
+            <label for="title">Page Title</label>
+            <input type="text" id="title" name="title" placeholder="e.g., Testimonials, Blog, Insurance" required autofocus>
+            <span class="field-hint">This appears in the navigation menu and as the page heading. You can change it later.</span>
+          </div>
+          <button type="submit" class="btn-create">Create Page →</button>
+        </form>
+
+        <div class="info-box">
+          <strong>What happens next?</strong><br>
+          The new page is created with a placeholder layout. Go to the Dashboard, find your new page, and click <strong>Edit</strong> to add content, images, and a subtitle.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
