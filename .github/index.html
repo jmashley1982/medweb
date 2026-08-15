@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Medical Practice Website Demos</title>
+    <meta
+      name="description"
+      content="Two live sample websites for medical practices, each with a working content management system."
+    />
+    <meta name="robots" content="noindex" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --ink: #10221b;
+        --muted: #5b6f66;
+        --line: #dfe7e3;
+        --card: #ffffff;
+        --bg: #f4f7f5;
+        --green: #1b5e44;
+        --navy: #1a2b4c;
+        --gold: #b08a3e;
+      }
+      body {
+        font-family:
+          ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 20px;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 940px;
+      }
+      header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      h1 {
+        font-size: clamp(1.7rem, 4vw, 2.5rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      header p {
+        color: var(--muted);
+        margin-top: 12px;
+        font-size: 1.02rem;
+        max-width: 34rem;
+        margin-inline: auto;
+      }
+      .grid {
+        display: grid;
+        gap: 22px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        box-shadow: 0 1px 2px rgba(16, 34, 27, 0.04);
+        transition:
+          transform 0.18s ease,
+          box-shadow 0.18s ease;
+      }
+      .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 34px rgba(16, 34, 27, 0.1);
+      }
+      .swatch {
+        width: 42px;
+        height: 42px;
+        border-radius: 11px;
+        flex: 0 0 auto;
+      }
+      .a .swatch {
+        background: var(--green);
+      }
+      .b .swatch {
+        background: var(--navy);
+      }
+      .card h2 {
+        font-size: 1.22rem;
+        font-weight: 750;
+        letter-spacing: -0.01em;
+      }
+      .kind {
+        font-size: 0.74rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--muted);
+      }
+      .card p {
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: auto;
+        padding-top: 8px;
+      }
+      a.btn {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 650;
+        padding: 10px 18px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+      }
+      .a .primary {
+        background: var(--green);
+        color: #fff;
+      }
+      .b .primary {
+        background: var(--navy);
+        color: #fff;
+      }
+      .secondary {
+        border-color: var(--line);
+        color: var(--ink);
+        background: #fff;
+      }
+      .secondary:hover {
+        border-color: var(--muted);
+      }
+      .note {
+        margin-top: 34px;
+        text-align: center;
+        font-size: 0.86rem;
+        color: var(--muted);
+      }
+      .note strong {
+        color: var(--ink);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --ink: #eef4f1;
+          --muted: #9db0a8;
+          --line: #2a3a34;
+          --card: #16201c;
+          --bg: #0e1613;
+        }
+        .secondary {
+          background: transparent;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>Medical Practice Website Demos</h1>
+        <p>
+          Two sample sites, each with a built-in content management system so a
+          practice can edit its own pages. Both practices are fictional.
+        </p>
+      </header>
+
+      <div class="grid">
+        <div class="card a">
+          <div class="swatch"></div>
+          <div>
+            <div class="kind">Vascular Surgery</div>
+            <h2>South Texas Vascular Experts</h2>
+          </div>
+          <p>
+            Eight pages covering services, staff profiles and patient resources,
+            with a full content dashboard behind it.
+          </p>
+          <div class="links">
+            <a class="btn primary" href="./south-texas/">View site</a>
+            <a class="btn secondary" href="./south-texas/admin/">View admin</a>
+          </div>
+        </div>
+
+        <div class="card b">
+          <div class="swatch"></div>
+          <div>
+            <div class="kind">Cardiology</div>
+            <h2>Austin Heart &amp; Associates</h2>
+          </div>
+          <p>
+            A modern practice site with team profiles and a page editor,
+            including rich text and header images.
+          </p>
+          <div class="links">
+            <a class="btn primary" href="./austin-heart/">View site</a>
+            <a class="btn secondary" href="./austin-heart/admin">View admin</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="note">
+        The admin areas are <strong>live previews</strong> — open to browse, no
+        password needed. You can click through and type into any field, but
+        changes aren&rsquo;t saved.
+      </p>
+    </div>
+  </body>
+</html>

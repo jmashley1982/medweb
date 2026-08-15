@@ -16,6 +16,10 @@
   var BANNER_TEXT = 'Demo preview — this is a live sample of the admin. Changes aren’t saved.';
   var TOAST_TEXT = 'Demo preview — changes aren’t saved.';
 
+  // Set by the build when the site is served from a subpath (e.g.
+  // "/medweb/south-texas"); empty at a domain root.
+  var BASE = typeof window.__DEMO_BASE__ === 'string' ? window.__DEMO_BASE__ : '';
+
   function injectStyles() {
     var css = [
       '.demo-banner{position:sticky;top:0;z-index:9999;display:flex;align-items:center;justify-content:center;',
@@ -71,6 +75,14 @@
     return action.indexOf('/admin/login') !== -1;
   }
 
+  function rewriteLogoutLinks() {
+    // There is no session to end; send "Sign Out" back to the login screen.
+    var links = document.querySelectorAll('a[href$="/admin/logout"]');
+    for (var i = 0; i < links.length; i++) {
+      links[i].setAttribute('href', BASE + '/admin/');
+    }
+  }
+
   function guardForms() {
     // Capture phase: runs before the element's own inline `onsubmit`, so the
     // dashboard's "Permanently delete?" confirm() never fires either.
@@ -84,7 +96,7 @@
         event.stopPropagation();
 
         if (isLoginForm(form)) {
-          window.location.href = '/admin/dashboard/';
+          window.location.href = BASE + '/admin/dashboard/';
           return;
         }
         toast(TOAST_TEXT);
@@ -93,19 +105,11 @@
     );
   }
 
-  function rewriteDeadLinks() {
-    // There is no session to end; send "Sign Out" back to the login screen.
-    var links = document.querySelectorAll('a[href="/admin/logout"]');
-    for (var i = 0; i < links.length; i++) {
-      links[i].setAttribute('href', '/admin/');
-    }
-  }
-
   function init() {
     injectStyles();
     injectBanner();
     guardForms();
-    rewriteDeadLinks();
+    rewriteLogoutLinks();
   }
 
   if (document.readyState === 'loading') {

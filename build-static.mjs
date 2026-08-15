@@ -26,6 +26,14 @@ const VIEWS = path.join(ROOT, 'views');
 const PUBLIC = path.join(ROOT, 'public');
 const DIST = path.join(ROOT, 'dist');
 
+// Where the site will be served from. Empty means the domain root (Cloudflare
+// Pages); GitHub Pages serves this repo under a subpath, e.g.
+// BASE_PATH=/medweb/south-texas. Normalised to "" or "/foo" (no trailing slash).
+const BASE = (process.env.BASE_PATH ?? '')
+  .trim()
+  .replace(/\/+$/, '')
+  .replace(/^(?!\/|$)/, '/');
+
 // Mirror the shape app.js hands to the templates: rows carry a numeric id and
 // a parsed `content` object.
 const pageRows = seedPages.map((p, i) => ({
@@ -53,13 +61,32 @@ async function render(view, data) {
 async function writePage(routePath, html) {
   const dir = routePath === '/' ? DIST : path.join(DIST, routePath);
   await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(path.join(dir, 'index.html'), html, 'utf8');
+  await fs.writeFile(path.join(dir, 'index.html'), withBase(html), 'utf8');
   return path.relative(ROOT, path.join(dir, 'index.html'));
 }
 
-// Pull in the read-only guard just before </body>.
+// The EJS templates emit root-absolute URLs (/style.css, /uploads/x.png,
+// /about). Those are correct at a domain root but resolve outside the site
+// when it is served from a subpath, so rewrite them at build time. Protocol
+// relative (//host) and absolute (https://) URLs are left alone.
+function withBase(html) {
+  if (!BASE) return html;
+  return (
+    html
+      .replace(/\b(href|src|action)="\/(?!\/)/g, (_m, attr) => `${attr}="${BASE}/`)
+      // The hero uses a CSS custom property: style="--hero-img: url('/uploads/x.png')"
+      .replace(/url\((['"]?)\/(?!\/)/g, (_m, q) => `url(${q}${BASE}/`)
+  );
+}
+
+// Pull in the read-only guard just before </body>, telling it where the site
+// is rooted so its own navigation targets stay correct too.
+// Emitted root-absolute like everything else in the templates; writePage runs
+// withBase over the finished document, so this gets rewritten with the rest.
 function withDemoMode(html) {
-  const tag = '<script src="/demo-mode.js" defer></script>';
+  const tag =
+    `<script>window.__DEMO_BASE__=${JSON.stringify(BASE)};</script>` +
+    `<script src="/demo-mode.js" defer></script>`;
   return html.includes('</body>')
     ? html.replace('</body>', `  ${tag}\n</body>`)
     : html + tag;
