@@ -8,6 +8,8 @@
 // Array order is nav order: PublicLayout maps this straight into the header,
 // with `home` linking to "/" and everything else to "/page/<slug>".
 
+import { asset } from '@/asset';
+
 export interface Page {
   id: number;
   title: string;
@@ -49,7 +51,7 @@ export const DEMO_PAGES: Page[] = [
     slug: 'home',
     title: 'Home',
     template: 'home',
-    headerImage: '/images/hero-clinic.jpg',
+    headerImage: asset('images/hero-clinic.jpg'),
     videoUrl: null,
     content:
       '<p>Austin Heart &amp; Associates has cared for Central Texas hearts since 2003.</p>',
@@ -61,7 +63,7 @@ export const DEMO_PAGES: Page[] = [
     slug: 'about',
     title: 'About',
     template: 'standard',
-    headerImage: '/images/dr-gomez.jpg',
+    headerImage: asset('images/dr-gomez.jpg'),
     videoUrl: null,
     content: `
 <h2>A practice built around the patient</h2>
@@ -90,7 +92,7 @@ export const DEMO_PAGES: Page[] = [
     slug: 'services',
     title: 'Services',
     template: 'standard',
-    headerImage: '/images/clinic-interior.jpg',
+    headerImage: asset('images/clinic-interior.jpg'),
     videoUrl: null,
     content: `
 <h2>Comprehensive cardiovascular care, under one roof</h2>
@@ -125,7 +127,7 @@ export const DEMO_PAGES: Page[] = [
     slug: 'team',
     title: 'Our Team',
     template: 'standard',
-    headerImage: '/images/team-group.jpg',
+    headerImage: asset('images/team-group.jpg'),
     videoUrl: null,
     content: `
 <p>Our care team combines decades of cardiac nursing, rehabilitation and physician-assistant experience. Meet the people who will look after you — from your first phone call through your last follow-up.</p>
@@ -138,7 +140,7 @@ export const DEMO_PAGES: Page[] = [
     slug: 'patient-info',
     title: 'Patient Info',
     template: 'standard',
-    headerImage: '/images/reception.jpg',
+    headerImage: asset('images/reception.jpg'),
     videoUrl: null,
     content: `
 <h2>Your first visit</h2>
@@ -181,7 +183,7 @@ export const DEMO_PAGES: Page[] = [
     slug: 'contact',
     title: 'Contact',
     template: 'standard',
-    headerImage: '/images/reception.jpg',
+    headerImage: asset('images/reception.jpg'),
     videoUrl: null,
     content: `
 <h2>Get in touch</h2>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useListPages } from "@/demo-api";
 import { Menu, X } from "lucide-react";
+import { asset } from "@/asset";
 
 export function PublicLayout({ children }: { children: React.ReactNode }) {
   const { data: pages } = useListPages();
@@ -21,7 +22,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 md:h-24 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 shrink-0" onClick={() => setMobileOpen(false)}>
             <img
-              src="/logo.png"
+              src={asset("logo.png")}
               alt="Austin Heart & Associates"
               className="h-12 md:h-16 w-auto"
             />
@@ -102,7 +103,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-10 md:mb-12">
             <div className="space-y-3">
-              <img src="/logo.png" alt="Austin Heart & Associates" className="h-10 md:h-12 w-auto brightness-0 invert" />
+              <img src={asset("logo.png")} alt="Austin Heart & Associates" className="h-10 md:h-12 w-auto brightness-0 invert" />
               <p className="text-primary-foreground/80 font-serif text-base md:text-lg leading-relaxed max-w-xs">
                 Compassionate Cardiovascular Care Since 2003
               </p>

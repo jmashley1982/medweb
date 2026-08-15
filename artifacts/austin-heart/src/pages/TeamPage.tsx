@@ -1,4 +1,5 @@
 import { PublicLayout } from "@/components/PublicLayout";
+import { asset } from "@/asset";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -7,28 +8,28 @@ export function TeamPage() {
     {
       name: "Mei Lin Chen, RN, BSN",
       title: "Lead Cardiac Nurse",
-      photo: "/images/staff-chen.jpg",
+      photo: asset("images/staff-chen.jpg"),
       bio: "Mei Lin joined the practice in 2011 after six years in the cardiac ICU at St. David's Medical Center. She leads patient education and coordinates all pre- and post-procedure care. Patients consistently describe her as \"the one who actually explains what's happening.\" She holds certification in Cardiac-Vascular Nursing (RN-BC) and is pursuing her Nurse Practitioner degree at UT Austin.",
       credentials: ["RN, BSN", "RN-BC (Cardiac-Vascular Nursing)", "BLS/ACLS Certified"],
     },
     {
       name: "Sarah Johnson, RN",
       title: "Clinical Care Coordinator",
-      photo: "/images/staff-johnson.jpg",
+      photo: asset("images/staff-johnson.jpg"),
       bio: "Sarah is the operational backbone of Austin Heart & Associates. She manages referrals, coordinates specialist consultations, and ensures every patient's journey through our clinic is seamless. With a background in both medical-surgical and cardiac stepdown nursing, she brings broad clinical insight to her coordination role. Outside of work, she is a trail runner and volunteers with Austin Pets Alive.",
       credentials: ["RN, BSN", "Certified Case Manager (CCM)", "BLS/ACLS Certified"],
     },
     {
       name: "Amanda Torres, PA-C",
       title: "Physician Assistant",
-      photo: "/images/staff-torres.jpg",
+      photo: asset("images/staff-torres.jpg"),
       bio: "Amanda came to Austin Heart & Associates from a cardiothoracic surgery program at Texas Children's Hospital, where she assisted in over 300 open-heart procedures. As our PA-C, she handles initial patient assessments, manages chronic disease follow-ups, and partners closely with Dr. Gomez on complex cases. Patients love her directness and her follow-through. She is also a certified yoga instructor and leads a free community class every Saturday morning.",
       credentials: ["PA-C", "MPAS, Baylor College of Medicine", "NCCPA Certified", "BLS/ACLS Certified"],
     },
     {
       name: "James Redhorse, RN",
       title: "Cardiac Rehabilitation Specialist",
-      photo: "/images/staff-redhorse.jpg",
+      photo: asset("images/staff-redhorse.jpg"),
       bio: "James leads our cardiac rehabilitation program — a structured 12-week recovery and conditioning protocol for patients following heart attacks, bypass surgery, or other major cardiac events. He designed the program from the ground up using evidence-based protocols from the American Association of Cardiovascular and Pulmonary Rehabilitation. A former Division I athlete, James brings a coach's mindset to recovery. He also speaks conversational Diné Bizaad (Navajo) and is an advocate for Indigenous heart health equity.",
       credentials: ["RN, BSN", "AACVPR Certified", "Exercise Physiologist", "BLS/ACLS Certified"],
     }
@@ -38,7 +39,7 @@ export function TeamPage() {
     <PublicLayout>
       <div className="w-full h-[500px] overflow-hidden relative">
         <img
-          src="/images/team-group.jpg"
+          src={asset("images/team-group.jpg")}
           alt="Our Team"
           className="w-full h-full object-cover object-center"
         />
@@ -59,7 +60,7 @@ export function TeamPage() {
             <div className="grid md:grid-cols-5 gap-0">
               <div className="md:col-span-2 relative aspect-[4/5] md:aspect-auto">
                 <img 
-                  src="/images/dr-gomez.jpg" 
+                  src={asset("images/dr-gomez.jpg")} 
                   alt="Dr. Marcos Gomez" 
                   className="w-full h-full object-cover"
                 />

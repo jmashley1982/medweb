@@ -1,5 +1,6 @@
 import { useGetPageBySlug } from "@/demo-api";
 import { PublicLayout } from "@/components/PublicLayout";
+import { asset } from "@/asset";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -178,7 +179,7 @@ export function HomePage() {
             <div className="order-1 md:order-2">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
                 <img
-                  src="/images/team-group.jpg"
+                  src={asset("images/team-group.jpg")}
                   alt="Austin Heart & Associates Team"
                   className="w-full h-full object-cover"
                 />
