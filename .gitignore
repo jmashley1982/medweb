@@ -1,4 +1,5 @@
 node_modules/
+dist/
 .cache/
 database.sqlite
 database.sqlite-journal
