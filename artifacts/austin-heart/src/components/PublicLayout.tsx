@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { useListPages } from "@workspace/api-client-react";
+import { useListPages } from "@/demo-api";
 import { Menu, X } from "lucide-react";
 
 export function PublicLayout({ children }: { children: React.ReactNode }) {

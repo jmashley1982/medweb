@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { useAdminListPages, useAdminDeletePage, getAdminListPagesQueryKey } from "@workspace/api-client-react";
+import { useAdminListPages, useAdminDeletePage, getAdminListPagesQueryKey } from "@/demo-api";
 import { AdminLayout } from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";

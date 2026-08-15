@@ -5,8 +5,9 @@ import {
   useAdminUpdatePage, 
   useAdminGetPage,
   getAdminGetPageQueryKey,
-  PageInputTemplate
-} from "@workspace/api-client-react";
+  PageInputTemplate,
+  demoNotice
+} from "@/demo-api";
 import { AdminLayout } from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -58,33 +59,12 @@ export function AdminPageForm() {
     }
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setIsUploading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const response = await fetch("/api/admin/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-      
-      if (data.success && data.url) {
-        setHeaderImage(data.url);
-        toast({ title: "Image uploaded successfully" });
-      } else {
-        toast({ title: data.error || "Upload failed", variant: "destructive" });
-      }
-    } catch (error) {
-      toast({ title: "Upload failed", variant: "destructive" });
-    } finally {
-      setIsUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = "";
-    }
+  // No upload endpoint exists in the static demo, so show the same notice the
+  // other write actions use rather than POSTing into the void.
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.[0]) return;
+    demoNotice();
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const handleSubmit = (e: React.FormEvent) => {

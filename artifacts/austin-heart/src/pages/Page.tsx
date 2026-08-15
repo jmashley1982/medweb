@@ -1,4 +1,4 @@
-import { useGetPageBySlug } from "@workspace/api-client-react";
+import { useGetPageBySlug } from "@/demo-api";
 import { PublicLayout } from "@/components/PublicLayout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useParams } from "wouter";

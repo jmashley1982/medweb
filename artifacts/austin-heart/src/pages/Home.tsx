@@ -1,4 +1,4 @@
-import { useGetPageBySlug } from "@workspace/api-client-react";
+import { useGetPageBySlug } from "@/demo-api";
 import { PublicLayout } from "@/components/PublicLayout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
@@ -178,7 +178,7 @@ export function HomePage() {
             <div className="order-1 md:order-2">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
                 <img
-                  src="/api/admin/uploads/magnific_a-highquality-professiona_aQVu1UAfSh.png"
+                  src="/images/team-group.jpg"
                   alt="Austin Heart & Associates Team"
                   className="w-full h-full object-cover"
                 />

@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
-import { useAdminMe, useAdminLogout } from "@workspace/api-client-react";
+import { useAdminMe, useAdminLogout } from "@/demo-api";
 import { Button } from "@/components/ui/button";
+import { DemoBanner } from "@/components/DemoBanner";
 import { LogOut, ExternalLink, LayoutDashboard } from "lucide-react";
 import { useEffect } from "react";
 
@@ -26,7 +27,9 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-[100dvh] flex flex-col md:flex-row bg-gray-50">
+    <div className="min-h-[100dvh] bg-gray-50">
+      <DemoBanner />
+      <div className="flex flex-col md:flex-row">
       <aside className="w-full md:w-64 bg-white border-r border-border flex flex-col">
         <div className="h-16 flex items-center px-6 border-b border-border">
           <span className="font-semibold text-primary">CMS Admin</span>
@@ -56,6 +59,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
       <main className="flex-1 p-6 md:p-8 overflow-y-auto">
         {children}
       </main>
+      </div>
     </div>
   );
 }
