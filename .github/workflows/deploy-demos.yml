@@ -5,7 +5,13 @@ name: Deploy demo sites
 #   /medweb/austin-heart/ — Austin Heart & Associates (claude/austin-heart-public-url)
 #
 # The two sites have unrelated git histories and different toolchains, so this
-# workflow checks each branch out separately and builds it on its own terms.
+# workflow checks each branch out separately and builds it on its own terms,
+# then publishes the combined output to the `gh-pages` branch.
+#
+# Note: actions/configure-pages with enablement:true does NOT work here — the
+# built-in GITHUB_TOKEN carries Pages:write but creating a Pages site for the
+# first time needs repo-admin, so it fails with "Resource not accessible by
+# integration". Publishing to a gh-pages branch avoids that API entirely.
 
 on:
   push:
@@ -14,29 +20,18 @@ on:
       - claude/austin-heart-public-url
   workflow_dispatch:
 
-# Needed by actions/configure-pages to enable Pages, and by deploy-pages to publish.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 # Never let two deploys race; let a newer push supersede an in-flight one.
 concurrency:
-  group: pages
+  group: gh-pages
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Configure Pages
-        id: pages
-        uses: actions/configure-pages@v5
-        with:
-          # Turns Pages on for the repo if it is not already enabled, so this
-          # needs no manual setup in repository settings.
-          enablement: true
-
       # ---- Site A: South Texas Vascular Experts (Express + EJS, prerendered)
       - name: Check out South Texas Vascular
         uses: actions/checkout@v4
@@ -51,9 +46,9 @@ jobs:
       - name: Build South Texas Vascular
         working-directory: south-texas
         env:
-          # sqlite3 is only needed by the live Express server, never by the
-          # static build — skip the one native module.
-          BASE_PATH: ${{ steps.pages.outputs.base_path }}/south-texas
+          BASE_PATH: /medweb/south-texas
+        # sqlite3 is only needed by the live Express server, never by the
+        # static build — skip the one native module.
         run: |
           npm ci --omit=optional
           npm run build
@@ -76,31 +71,36 @@ jobs:
       - name: Build Austin Heart
         working-directory: austin-heart
         env:
-          BASE_PATH: ${{ steps.pages.outputs.base_path }}/austin-heart/
+          BASE_PATH: /medweb/austin-heart/
         run: |
           pnpm install --frozen-lockfile
           pnpm run build
 
-      # ---- Assemble both under one Pages site
+      # ---- Assemble both under one site
       - name: Assemble site
         run: |
-          mkdir -p public/south-texas public/austin-heart
+          rm -rf public && mkdir -p public/south-texas public/austin-heart
           cp -r south-texas/dist/. public/south-texas/
           cp -r austin-heart/artifacts/austin-heart/dist/public/. public/austin-heart/
           cp south-texas/.github/index.html public/index.html
+          # Tell Pages not to run the output through Jekyll, which would drop
+          # any file or directory beginning with an underscore.
+          touch public/.nojekyll
           echo "--- assembled ---"
-          find public -maxdepth 2 -mindepth 1 -type d | sort
+          find public -maxdepth 2 -mindepth 1 | sort
 
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: public
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Publish to gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd public
+          git init -q
+          git checkout -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Deploy demo sites from ${GITHUB_SHA::7}"
+          git push -q --force \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            gh-pages
+          echo "Published $(git ls-files | wc -l) files to gh-pages"
