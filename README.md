@@ -16,6 +16,7 @@ admin screens included.
 | `build-static.mjs` | Prerenders that Express app to flat HTML |
 | `sites/austin-heart/` | Austin Heart & Associates — React + Vite |
 | `build-site.mjs` | Assembles all three into one deployable `dist/` |
+| `wrangler.jsonc` | Tells Cloudflare to serve `dist/` as static files |
 | `archive/` | Superseded work, kept not deleted |
 
 ## Building
@@ -67,6 +68,13 @@ Cloudflare's Git integration created this as a Worker serving static assets
 rather than a classic Pages project — hence the `workers.dev` address rather
 than `pages.dev`. It makes no difference to how the site is built or served;
 `dist/` is uploaded as static files either way.
+
+`wrangler.jsonc` is what makes that work, and it is not optional. A Worker
+deployed from Git with no wrangler config gets Cloudflare's starter script
+instead of the site — the deploy succeeds and the address answers "Hello
+world". The config declares an assets-only Worker (no `main` entry, so no
+code runs on a request) pointing at `./dist`. Its `name` must stay `medweb`
+so deploys update this site rather than creating a second Worker.
 
 Its build settings:
 

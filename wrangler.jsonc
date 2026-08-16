@@ -1,0 +1,17 @@
+{
+  // Cloudflare's Git integration deploys this repo as a Worker. Without this
+  // file it has nothing to go on and ships its own "Hello world" starter
+  // script instead of the site.
+  //
+  // There is deliberately no "main" entry: this is an assets-only Worker. No
+  // code runs on a request — Cloudflare just serves the files that
+  // `npm run build` puts in dist/.
+  //
+  // "name" must match the Worker that already exists, or a deploy creates a
+  // second one instead of updating this site.
+  "name": "medweb",
+  "compatibility_date": "2026-08-16",
+  "assets": {
+    "directory": "./dist"
+  }
+}
