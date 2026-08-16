@@ -53,20 +53,13 @@ nothing is ever saved.
 
 ## Deploying
 
-Everything lives on `main`. Pushing to `main` triggers
-`.github/workflows/deploy.yml`, which builds the site and force-pushes the
-result to the `gh-pages` branch.
+Everything lives on `main`, in this repository on GitHub. That never changes —
+GitHub is where the code and the build live.
 
-Live: **https://jmashley1982.github.io/medweb/**
+The **public site is Cloudflare Pages**, connected to this repo. Pushing to
+`main` triggers a Cloudflare build and publishes it. Nothing else to run.
 
-That requires Pages to be set to *Deploy from a branch → `gh-pages` → `/ (root)`*
-in the repo settings — a one-time switch, already done.
-
-### Moving to Cloudflare Pages
-
-Not wired up yet, and it needs one action in the Cloudflare dashboard that
-cannot be done from the API alone. Create a Pages project connected to this
-repository with:
+Its build settings:
 
 | Setting | Value |
 |---|---|
@@ -77,11 +70,19 @@ repository with:
 | Root directory | *(blank)* |
 | Environment variable | `NODE_VERSION` = `22` |
 
-Leave `SITE_BASE` unset — a Pages project is served at its own domain root.
+`SITE_BASE` stays unset — a Pages project is served at its own domain root,
+which is exactly what an empty `SITE_BASE` means.
 
-Once that exists, pushing to `main` publishes to both Cloudflare and GitHub
-Pages. Drop `.github/workflows/deploy.yml` when Cloudflare is confirmed good
-and you no longer want the GitHub Pages copy.
+### The retired GitHub Pages copy
+
+This repo used to publish itself to GitHub Pages at
+`jmashley1982.github.io/medweb` via a workflow that built with
+`SITE_BASE=/medweb`. Cloudflare replaced it, so that workflow is gone.
+
+The `gh-pages` branch still exists and still serves its last build, frozen at
+the point Cloudflare took over. To take that old address down for good, set
+*Settings → Pages → Source* to **None**. Leave the branch alone otherwise —
+deleting it is not needed and not reversible.
 
 ## State of play
 
@@ -89,9 +90,15 @@ and you no longer want the GitHub Pages copy.
 - Landing page redesigned as MedWebDev, on the five-colour brand palette
 - Both demo sites building from one command
 - Everything consolidated onto `main` from four scattered branches
-- Publishing on every push to `main`
+- Cloudflare Pages connected; pushing to `main` publishes the public site
+- GitHub Pages publishing retired
 
 **Next**
-- Connect the Cloudflare Pages project
+- Record the live `.pages.dev` address here once it's confirmed
+- Switch *Settings → Pages → Source* to **None** to retire the old
+  `jmashley1982.github.io/medweb` address, which is now frozen
 - Decide whether the landing page should be indexable — it currently carries
   `<meta name="robots" content="noindex">`, so search engines skip it
+- Three superseded branches (`claude/*`, `austin-heart`) can be deleted from
+  the repo's Branches page. Their unique code is already saved in `archive/`.
+  Do not delete `gh-pages` casually — it still serves the old address.
