@@ -75,6 +75,25 @@
     return action.indexOf('/admin/login') !== -1;
   }
 
+  function prepLoginForm() {
+    var form = document.querySelector('form[action$="/admin/login"]');
+    if (!form) return;
+
+    // The fields are marked `required`, so browser validation blocks submit
+    // until they are filled — which would force a demo visitor to invent
+    // credentials before the interceptor below ever runs. Drop the constraint
+    // and prefill the demo values so Sign In is a single click.
+    var fields = form.querySelectorAll('input[required]');
+    for (var i = 0; i < fields.length; i++) {
+      fields[i].removeAttribute('required');
+    }
+
+    var username = form.querySelector('#username');
+    var password = form.querySelector('#password');
+    if (username && !username.value) username.value = 'admin';
+    if (password && !password.value) password.value = 'vibe123';
+  }
+
   function rewriteLogoutLinks() {
     // There is no session to end; send "Sign Out" back to the login screen.
     var links = document.querySelectorAll('a[href$="/admin/logout"]');
@@ -109,6 +128,7 @@
     injectStyles();
     injectBanner();
     guardForms();
+    prepLoginForm();
     rewriteLogoutLinks();
   }
 
