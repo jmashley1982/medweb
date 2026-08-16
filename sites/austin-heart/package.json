@@ -1,0 +1,16 @@
+{
+  "name": "workspace",
+  "version": "0.0.0",
+  "license": "MIT",
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "build": "pnpm run typecheck && pnpm --filter @workspace/austin-heart run build",
+    "typecheck": "pnpm --filter @workspace/austin-heart run typecheck",
+    "dev": "pnpm --filter @workspace/austin-heart run dev"
+  },
+  "private": true,
+  "devDependencies": {
+    "prettier": "^3.8.3",
+    "typescript": "~5.9.3"
+  }
+}

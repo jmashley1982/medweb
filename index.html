@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MedWebDev — Websites for medical practices</title>
+    <meta
+      name="description"
+      content="MedWebDev builds websites for medical practices, each with a content dashboard the staff can actually run. Two live demos inside."
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#16000F" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23820263'/%3E%3Cpath d='M14 8h4v6h6v4h-6v6h-4v-6H8v-4h6z' fill='%23FFFFFA'/%3E%3C/svg%3E"
+    />
+
+    <style>
+      /* ==========================================================
+         MedWebDev — landing page
+         Palette: 820263 plum · EA638C pink · 31AFD4 cyan
+                  62A87C green · FFFFFA bone
+         ========================================================== */
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --plum: #820263;
+        --pink: #ea638c;
+        --cyan: #31afd4;
+        --green: #62a87c;
+        --bone: #fffffa;
+
+        --ink: #16000f;
+        --ink-2: #1e0417;
+        --bone-70: rgba(255, 255, 250, 0.7);
+        --bone-52: rgba(255, 255, 250, 0.52);
+        --bone-38: rgba(255, 255, 250, 0.38);
+        --hairline: rgba(255, 255, 250, 0.12);
+        --glass: rgba(255, 255, 250, 0.045);
+
+        --sans:
+          "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        --serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+
+        --shell: min(1180px, 100% - 48px);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        font-family: var(--sans);
+        background: var(--ink);
+        color: var(--bone);
+        line-height: 1.6;
+        letter-spacing: -0.011em;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      ::selection {
+        background: var(--pink);
+        color: var(--ink);
+      }
+
+      .shell {
+        width: var(--shell);
+        margin-inline: auto;
+      }
+
+      /* ---------- ambient background ---------- */
+      .aurora {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        opacity: 0.55;
+        will-change: transform;
+      }
+      .blob-1 {
+        width: 62vw;
+        height: 62vw;
+        top: -22vw;
+        left: -14vw;
+        background: var(--plum);
+        opacity: 0.85;
+        animation: drift-1 26s var(--ease) infinite alternate;
+      }
+      .blob-2 {
+        width: 46vw;
+        height: 46vw;
+        top: -8vw;
+        right: -12vw;
+        background: var(--pink);
+        opacity: 0.42;
+        animation: drift-2 32s var(--ease) infinite alternate;
+      }
+      .blob-3 {
+        width: 40vw;
+        height: 40vw;
+        top: 34vh;
+        left: 46vw;
+        background: var(--cyan);
+        opacity: 0.26;
+        animation: drift-3 38s var(--ease) infinite alternate;
+      }
+      .blob-4 {
+        width: 34vw;
+        height: 34vw;
+        top: 52vh;
+        left: 2vw;
+        background: var(--green);
+        opacity: 0.2;
+        animation: drift-2 30s var(--ease) infinite alternate-reverse;
+      }
+      @keyframes drift-1 {
+        to {
+          transform: translate3d(9vw, 7vh, 0) scale(1.16);
+        }
+      }
+      @keyframes drift-2 {
+        to {
+          transform: translate3d(-11vw, 9vh, 0) scale(1.1);
+        }
+      }
+      @keyframes drift-3 {
+        to {
+          transform: translate3d(-8vw, -11vh, 0) scale(1.22);
+        }
+      }
+
+      /* fine grid + grain, sits over the blobs */
+      .weave {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background-image:
+          linear-gradient(to right, rgba(255, 255, 250, 0.045) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 250, 0.045) 1px, transparent 1px);
+        background-size: 74px 74px;
+        mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 20%, transparent 78%);
+        -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 20%, transparent 78%);
+      }
+      .grain {
+        position: fixed;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        opacity: 0.35;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+      }
+
+      /* everything real sits above the ambience */
+      .stage {
+        position: relative;
+        z-index: 3;
+      }
+
+      /* ---------- header ---------- */
+      .topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 40;
+        padding: 20px 0;
+        transition:
+          padding 0.4s var(--ease),
+          background 0.4s var(--ease),
+          border-color 0.4s var(--ease),
+          backdrop-filter 0.4s var(--ease);
+        border-bottom: 1px solid transparent;
+      }
+      .topbar.stuck {
+        padding: 12px 0;
+        background: rgba(22, 0, 15, 0.72);
+        backdrop-filter: blur(18px) saturate(150%);
+        -webkit-backdrop-filter: blur(18px) saturate(150%);
+        border-bottom-color: var(--hairline);
+      }
+      .topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        font-weight: 800;
+        font-size: 1.06rem;
+        letter-spacing: -0.035em;
+      }
+      .mark {
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(145deg, var(--plum), var(--pink));
+        box-shadow:
+          0 6px 18px rgba(130, 2, 99, 0.55),
+          inset 0 1px 0 rgba(255, 255, 250, 0.3);
+        flex: 0 0 auto;
+      }
+      .mark svg {
+        display: block;
+      }
+
+      .topnav {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--bone-70);
+      }
+      .topnav a {
+        transition: color 0.22s var(--ease);
+      }
+      .topnav a:hover {
+        color: var(--bone);
+      }
+      @media (max-width: 860px) {
+        .topnav .hide-sm {
+          display: none;
+        }
+      }
+      /* Below this the wordmark plus any text link crowds the CTA off the edge,
+         so the header keeps only the mark and the button. */
+      @media (max-width: 620px) {
+        .topnav {
+          gap: 14px;
+        }
+        .topnav a:not(.btn) {
+          display: none;
+        }
+        .wordmark {
+          font-size: 0.99rem;
+        }
+      }
+      @media (max-width: 380px) {
+        .wordmark {
+          font-size: 0.92rem;
+          gap: 8px;
+        }
+        .btn-sm {
+          padding: 9px 14px;
+          font-size: 0.82rem;
+        }
+      }
+
+      /* ---------- buttons ---------- */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        font-family: var(--sans);
+        font-size: 0.94rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        padding: 13px 24px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        white-space: nowrap;
+        transition:
+          transform 0.28s var(--ease),
+          box-shadow 0.28s var(--ease),
+          background 0.28s var(--ease),
+          border-color 0.28s var(--ease);
+      }
+      .btn-solid {
+        background: linear-gradient(135deg, var(--pink), var(--plum) 82%);
+        color: var(--bone);
+        box-shadow:
+          0 10px 30px rgba(234, 99, 140, 0.32),
+          inset 0 1px 0 rgba(255, 255, 250, 0.28);
+      }
+      .btn-solid:hover {
+        transform: translateY(-2px);
+        box-shadow:
+          0 16px 40px rgba(234, 99, 140, 0.42),
+          inset 0 1px 0 rgba(255, 255, 250, 0.34);
+      }
+      .btn-ghost {
+        background: var(--glass);
+        color: var(--bone);
+        border-color: var(--hairline);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      .btn-ghost:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 250, 0.32);
+        background: rgba(255, 255, 250, 0.09);
+      }
+      .btn-sm {
+        padding: 10px 18px;
+        font-size: 0.86rem;
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        position: relative;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 128px 0 116px;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.74rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--bone-70);
+        padding: 8px 16px 8px 12px;
+        border: 1px solid var(--hairline);
+        border-radius: 999px;
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      .pip {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 0 4px rgba(98, 168, 124, 0.22);
+        animation: pulse 2.6s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        50% {
+          box-shadow: 0 0 0 8px rgba(98, 168, 124, 0);
+        }
+      }
+
+      h1 {
+        margin-top: 28px;
+        font-size: clamp(2.75rem, 7vw, 5.5rem);
+        font-weight: 800;
+        line-height: 0.94;
+        letter-spacing: -0.05em;
+        max-width: 16ch;
+      }
+      h1 .flourish {
+        font-family: var(--serif);
+        font-style: italic;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        background: linear-gradient(100deg, var(--pink) 8%, var(--cyan) 58%, var(--green) 96%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        padding-right: 0.08em;
+      }
+      .lede {
+        margin-top: 24px;
+        max-width: 50ch;
+        font-size: clamp(1.02rem, 1.7vw, 1.22rem);
+        color: var(--bone-70);
+        line-height: 1.62;
+      }
+      .hero-actions {
+        margin-top: 38px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 13px;
+      }
+
+      /* ---------- ribbon ---------- */
+      .ribbon {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-top: 1px solid var(--hairline);
+        border-bottom: 1px solid var(--hairline);
+        padding: 15px 0;
+        overflow: hidden;
+        mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+        /* Sits at the very bottom of the fold, below the reveal observer's
+           trigger zone — so it gets its own load-in instead of .rise. */
+        animation: fade-up 0.95s var(--ease) 0.46s both;
+      }
+      @keyframes fade-up {
+        from {
+          opacity: 0;
+          transform: translateY(26px);
+          filter: blur(10px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+          filter: none;
+        }
+      }
+      .ribbon-track {
+        display: flex;
+        gap: 0;
+        width: max-content;
+        animation: slide 42s linear infinite;
+      }
+      .ribbon-group {
+        display: flex;
+        align-items: center;
+        gap: 34px;
+        padding-right: 34px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--bone-52);
+        white-space: nowrap;
+      }
+      .ribbon-group i {
+        font-style: normal;
+        color: var(--pink);
+      }
+      @keyframes slide {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .ribbon:hover .ribbon-track {
+        animation-play-state: paused;
+      }
+
+      /* ---------- section furniture ---------- */
+      section.band {
+        padding: clamp(84px, 11vw, 138px) 0;
+      }
+      .kicker {
+        font-size: 0.73rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.17em;
+        color: var(--bone-52);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .kicker::before {
+        content: "";
+        width: 26px;
+        height: 1px;
+        background: var(--pink);
+      }
+      h2 {
+        margin-top: 18px;
+        font-size: clamp(2rem, 4.4vw, 3.3rem);
+        font-weight: 800;
+        line-height: 1.03;
+        letter-spacing: -0.04em;
+        max-width: 20ch;
+      }
+      .sub {
+        margin-top: 18px;
+        max-width: 56ch;
+        color: var(--bone-70);
+        font-size: 1.02rem;
+      }
+
+      /* ---------- demo cards ---------- */
+      .demos {
+        margin-top: 56px;
+        display: grid;
+        gap: 26px;
+        grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr));
+      }
+      .demo {
+        position: relative;
+        border: 1px solid var(--hairline);
+        border-radius: 24px;
+        background: linear-gradient(
+          170deg,
+          rgba(255, 255, 250, 0.075),
+          rgba(255, 255, 250, 0.022)
+        );
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition:
+          transform 0.45s var(--ease),
+          border-color 0.45s var(--ease),
+          box-shadow 0.45s var(--ease);
+      }
+      .demo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.45s var(--ease);
+        background: radial-gradient(
+          420px circle at var(--mx, 50%) var(--my, 0%),
+          rgba(255, 255, 250, 0.1),
+          transparent 62%
+        );
+      }
+      .demo:hover {
+        transform: translateY(-6px);
+        border-color: rgba(255, 255, 250, 0.26);
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+      }
+      .demo:hover::after {
+        opacity: 1;
+      }
+      .demo .tint {
+        height: 3px;
+        width: 100%;
+      }
+      .demo-vascular .tint {
+        background: linear-gradient(90deg, var(--plum), var(--pink));
+      }
+      .demo-cardio .tint {
+        background: linear-gradient(90deg, var(--cyan), var(--green));
+      }
+
+      /* framed live preview */
+      .frame {
+        margin: 20px 20px 0;
+        border-radius: 13px;
+        border: 1px solid var(--hairline);
+        background: #0d000a;
+        overflow: hidden;
+      }
+      .chrome {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 12px;
+        border-bottom: 1px solid var(--hairline);
+        background: rgba(255, 255, 250, 0.045);
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 250, 0.22);
+      }
+      .url {
+        margin-left: 8px;
+        font-size: 0.7rem;
+        color: var(--bone-38);
+        letter-spacing: 0.01em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .viewport {
+        position: relative;
+        height: 218px;
+        overflow: hidden;
+      }
+      /* The preview renders at a desktop width and is scaled down to fit its
+         frame. The exact factor is set in JS from the frame's real width — these
+         values are only the pre-script fallback. */
+      .viewport iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1280px;
+        height: 530px;
+        border: 0;
+        transform: scale(0.42);
+        transform-origin: 0 0;
+        pointer-events: none;
+      }
+      .viewport::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, transparent 52%, rgba(22, 0, 15, 0.92));
+      }
+
+      .demo-body {
+        padding: 22px 26px 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1;
+      }
+      .speciality {
+        font-size: 0.71rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--bone-52);
+      }
+      .demo h3 {
+        font-size: 1.36rem;
+        font-weight: 700;
+        letter-spacing: -0.028em;
+        line-height: 1.16;
+      }
+      .demo p {
+        color: var(--bone-70);
+        font-size: 0.94rem;
+      }
+      .demo-links {
+        margin-top: auto;
+        padding-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .footnote {
+        margin-top: 30px;
+        font-size: 0.88rem;
+        color: var(--bone-52);
+        max-width: 68ch;
+      }
+      .footnote strong {
+        color: var(--bone);
+        font-weight: 600;
+      }
+
+      /* ---------- feature grid ---------- */
+      .features {
+        margin-top: 54px;
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(min(248px, 100%), 1fr));
+      }
+      .feature {
+        padding: 28px 26px 30px;
+        border: 1px solid var(--hairline);
+        border-radius: 20px;
+        background: var(--glass);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        transition:
+          transform 0.4s var(--ease),
+          border-color 0.4s var(--ease),
+          background 0.4s var(--ease);
+      }
+      .feature:hover {
+        transform: translateY(-4px);
+        border-color: rgba(255, 255, 250, 0.24);
+        background: rgba(255, 255, 250, 0.075);
+      }
+      .glyph {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 18px;
+      }
+      .glyph svg {
+        display: block;
+      }
+      .g-pink {
+        background: rgba(234, 99, 140, 0.16);
+        color: var(--pink);
+        box-shadow: inset 0 0 0 1px rgba(234, 99, 140, 0.32);
+      }
+      .g-cyan {
+        background: rgba(49, 175, 212, 0.16);
+        color: var(--cyan);
+        box-shadow: inset 0 0 0 1px rgba(49, 175, 212, 0.32);
+      }
+      .g-green {
+        background: rgba(98, 168, 124, 0.16);
+        color: var(--green);
+        box-shadow: inset 0 0 0 1px rgba(98, 168, 124, 0.32);
+      }
+      .g-plum {
+        background: rgba(234, 99, 140, 0.1);
+        color: #f2a3bd;
+        box-shadow: inset 0 0 0 1px rgba(130, 2, 99, 0.55);
+      }
+      .feature h3 {
+        font-size: 1.06rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .feature p {
+        margin-top: 9px;
+        font-size: 0.92rem;
+        color: var(--bone-70);
+      }
+
+      /* ---------- steps ---------- */
+      .steps {
+        margin-top: 54px;
+        display: grid;
+        gap: 22px;
+        grid-template-columns: repeat(auto-fit, minmax(min(258px, 100%), 1fr));
+        counter-reset: step;
+      }
+      .step {
+        position: relative;
+        padding-top: 26px;
+        border-top: 1px solid var(--hairline);
+      }
+      .step::before {
+        counter-increment: step;
+        content: "0" counter(step);
+        font-family: var(--serif);
+        font-size: 2.4rem;
+        line-height: 1;
+        color: transparent;
+        background: linear-gradient(120deg, var(--pink), var(--cyan));
+        -webkit-background-clip: text;
+        background-clip: text;
+        display: block;
+        margin-bottom: 12px;
+      }
+      .step h3 {
+        font-size: 1.08rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .step p {
+        margin-top: 9px;
+        font-size: 0.92rem;
+        color: var(--bone-70);
+      }
+
+      /* ---------- closing call ---------- */
+      .closer {
+        position: relative;
+        overflow: hidden;
+        border-radius: 28px;
+        padding: clamp(44px, 7vw, 76px);
+        border: 1px solid rgba(255, 255, 250, 0.16);
+        background:
+          radial-gradient(120% 150% at 8% 0%, rgba(234, 99, 140, 0.5), transparent 58%),
+          radial-gradient(110% 140% at 92% 108%, rgba(49, 175, 212, 0.42), transparent 60%),
+          linear-gradient(140deg, var(--plum), #3d0130 78%);
+        box-shadow: 0 34px 90px rgba(0, 0, 0, 0.5);
+        text-align: center;
+      }
+      .closer h2 {
+        margin: 0 auto;
+        max-width: 17ch;
+      }
+      .closer .sub {
+        margin: 18px auto 0;
+        color: rgba(255, 255, 250, 0.82);
+      }
+      .closer .hero-actions {
+        justify-content: center;
+        margin-top: 34px;
+      }
+
+      /* ---------- footer ---------- */
+      footer {
+        border-top: 1px solid var(--hairline);
+        padding: 42px 0 54px;
+      }
+      .foot-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        font-size: 0.86rem;
+        color: var(--bone-52);
+      }
+      .foot-links {
+        display: flex;
+        gap: 22px;
+      }
+      .foot-links a {
+        transition: color 0.22s var(--ease);
+      }
+      .foot-links a:hover {
+        color: var(--bone);
+      }
+
+      /* ---------- entrance choreography ---------- */
+      .rise {
+        opacity: 0;
+        transform: translateY(26px);
+        filter: blur(10px);
+      }
+      .rise.lit {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition:
+          opacity 0.95s var(--ease),
+          transform 0.95s var(--ease),
+          filter 0.95s var(--ease);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .blob,
+        .ribbon-track,
+        .pip {
+          animation: none !important;
+        }
+        .ribbon {
+          animation: none;
+          opacity: 1;
+        }
+        .rise {
+          opacity: 1;
+          transform: none;
+          filter: none;
+        }
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      @media (max-width: 560px) {
+        :root {
+          --shell: min(1180px, 100% - 34px);
+        }
+        .viewport {
+          height: 186px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="aurora" aria-hidden="true">
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+      <span class="blob blob-3"></span>
+      <span class="blob blob-4"></span>
+    </div>
+    <div class="weave" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="stage">
+      <!-- ============ header ============ -->
+      <header class="topbar" id="topbar">
+        <div class="shell topbar-inner">
+          <a href="#top" class="wordmark" aria-label="MedWebDev, home">
+            <span class="mark" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 32 32" fill="none">
+                <path d="M13.6 6h4.8v7.6H26v4.8h-7.6V26h-4.8v-7.6H6v-4.8h7.6z" fill="#FFFFFA" />
+              </svg>
+            </span>
+            <span>MedWebDev</span>
+          </a>
+          <nav class="topnav">
+            <a href="#demos">Demos</a>
+            <a href="#included" class="hide-sm">What&rsquo;s included</a>
+            <a href="#process" class="hide-sm">How it works</a>
+            <a href="#start" class="btn btn-ghost btn-sm">Start a site</a>
+          </nav>
+        </div>
+      </header>
+
+      <!-- ============ hero ============ -->
+      <main id="top">
+        <section class="hero">
+          <div class="shell">
+            <span class="eyebrow rise" style="transition-delay: 0.05s">
+              <span class="pip" aria-hidden="true"></span>
+              Websites for medical practices
+            </span>
+
+            <h1 class="rise" style="transition-delay: 0.14s">
+              Practice sites your front desk can <span class="flourish">actually</span> run.
+            </h1>
+
+            <p class="lede rise" style="transition-delay: 0.24s">
+              Every MedWebDev site ships with a content dashboard built in. Staff update
+              hours, swap a photo, add a provider — without a developer, a ticket, or a
+              phone call. Two working demos are below. Click into the admin and start
+              typing.
+            </p>
+
+            <div class="hero-actions rise" style="transition-delay: 0.34s">
+              <a href="#demos" class="btn btn-solid">
+                See the demos
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path
+                    d="M3 8h10M9 4l4 4-4 4"
+                    stroke="currentColor"
+                    stroke-width="1.9"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+              <a href="#included" class="btn btn-ghost">What&rsquo;s included</a>
+            </div>
+          </div>
+
+          <div class="ribbon" aria-hidden="true">
+            <div class="ribbon-track">
+              <div class="ribbon-group">
+                <span>Content dashboard</span><i>/</i>
+                <span>Provider profiles</span><i>/</i>
+                <span>Patient resources</span><i>/</i>
+                <span>Rich text editing</span><i>/</i>
+                <span>Header images</span><i>/</i>
+                <span>Mobile first</span><i>/</i>
+                <span>No database to babysit</span><i>/</i>
+                <span>Free static hosting</span><i>/</i>
+              </div>
+              <div class="ribbon-group">
+                <span>Content dashboard</span><i>/</i>
+                <span>Provider profiles</span><i>/</i>
+                <span>Patient resources</span><i>/</i>
+                <span>Rich text editing</span><i>/</i>
+                <span>Header images</span><i>/</i>
+                <span>Mobile first</span><i>/</i>
+                <span>No database to babysit</span><i>/</i>
+                <span>Free static hosting</span><i>/</i>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ demos ============ -->
+        <section class="band" id="demos">
+          <div class="shell">
+            <p class="kicker rise">Live demos</p>
+            <h2 class="rise" style="transition-delay: 0.08s">
+              Two practices. Two looks. Same editable spine.
+            </h2>
+            <p class="sub rise" style="transition-delay: 0.14s">
+              Both practices are fictional, but the sites are real — every page, every
+              photo, every admin screen is live and clickable right now.
+            </p>
+
+            <div class="demos">
+              <article class="demo demo-vascular rise" style="transition-delay: 0.1s">
+                <div class="tint" aria-hidden="true"></div>
+                <div class="frame" aria-hidden="true">
+                  <div class="chrome">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                    <span class="url">/south-texas/</span>
+                  </div>
+                  <div class="viewport">
+                    <iframe
+                      src="./south-texas/"
+                      title=""
+                      loading="lazy"
+                      tabindex="-1"
+                      scrolling="no"
+                    ></iframe>
+                  </div>
+                </div>
+                <div class="demo-body">
+                  <p class="speciality">Vascular surgery</p>
+                  <h3>South Texas Vascular Experts</h3>
+                  <p>
+                    Eight pages of services, staff profiles and patient resources, with a
+                    full content dashboard sitting behind them.
+                  </p>
+                  <div class="demo-links">
+                    <a class="btn btn-solid btn-sm" href="./south-texas/">View site</a>
+                    <!-- Straight to the dashboard: /admin/ is the login screen. -->
+                    <a class="btn btn-ghost btn-sm" href="./south-texas/admin/dashboard/"
+                      >View admin</a
+                    >
+                  </div>
+                </div>
+              </article>
+
+              <article class="demo demo-cardio rise" style="transition-delay: 0.2s">
+                <div class="tint" aria-hidden="true"></div>
+                <div class="frame" aria-hidden="true">
+                  <div class="chrome">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                    <span class="url">/austin-heart/</span>
+                  </div>
+                  <div class="viewport">
+                    <iframe
+                      src="./austin-heart/"
+                      title=""
+                      loading="lazy"
+                      tabindex="-1"
+                      scrolling="no"
+                    ></iframe>
+                  </div>
+                </div>
+                <div class="demo-body">
+                  <p class="speciality">Cardiology</p>
+                  <h3>Austin Heart &amp; Associates</h3>
+                  <p>
+                    A brighter, more modern practice site with team profiles and a page
+                    editor that handles rich text and header images.
+                  </p>
+                  <div class="demo-links">
+                    <a class="btn btn-solid btn-sm" href="./austin-heart/">View site</a>
+                    <a class="btn btn-ghost btn-sm" href="./austin-heart/admin">View admin</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <p class="footnote rise">
+              The admin areas are <strong>live previews</strong> — they open straight to the
+              dashboard, no password needed. Click through anything and type into any field;
+              nothing is saved.
+            </p>
+          </div>
+        </section>
+
+        <!-- ============ what's included ============ -->
+        <section class="band" id="included">
+          <div class="shell">
+            <p class="kicker rise">What&rsquo;s included</p>
+            <h2 class="rise" style="transition-delay: 0.08s">
+              Everything a practice needs. Nothing it has to maintain.
+            </h2>
+
+            <div class="features">
+              <div class="feature rise" style="transition-delay: 0.06s">
+                <div class="glyph g-pink" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5z M4 9h16 M8 13h8 M8 16h5"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <h3>A dashboard, not a dependency</h3>
+                <p>
+                  Log in, edit a page, save. Hours, bios, insurance lists and photos stay
+                  current because the staff can change them in seconds.
+                </p>
+              </div>
+
+              <div class="feature rise" style="transition-delay: 0.13s">
+                <div class="glyph g-cyan" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M8.5 4h7a2.5 2.5 0 0 1 2.5 2.5v11a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 6 17.5v-11A2.5 2.5 0 0 1 8.5 4z M11 17.4h2"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <h3>Built for the phone first</h3>
+                <p>
+                  Most patients find a practice on a phone in a parking lot. Every layout is
+                  drawn for that screen before any other.
+                </p>
+              </div>
+
+              <div class="feature rise" style="transition-delay: 0.2s">
+                <div class="glyph g-green" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12 3 4.5 6.2v5.4c0 4.4 3.1 8.1 7.5 9.4 4.4-1.3 7.5-5 7.5-9.4V6.2z M9 12l2.2 2.2L15.4 10"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <h3>Nothing to break at 2am</h3>
+                <p>
+                  Pages are prerendered to flat files. No server to crash, no database to
+                  restore, no cold start between a patient and your phone number.
+                </p>
+              </div>
+
+              <div class="feature rise" style="transition-delay: 0.27s">
+                <div class="glyph g-plum" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M9 20H5.5A1.5 1.5 0 0 1 4 18.5V5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5V12 M14.5 17.2l2.4 2.4 4.1-4.6"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <h3>Yours from day one</h3>
+                <p>
+                  The whole site lives in your own repository. No monthly platform rent, no
+                  vendor holding the keys to your own front door.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ process ============ -->
+        <section class="band" id="process">
+          <div class="shell">
+            <p class="kicker rise">How it works</p>
+            <h2 class="rise" style="transition-delay: 0.08s">Three steps, then it&rsquo;s yours.</h2>
+
+            <div class="steps">
+              <div class="step rise" style="transition-delay: 0.08s">
+                <h3>Pick a direction</h3>
+                <p>
+                  Start from one of the demos or bring your own colors and logo. We agree on
+                  the pages and the tone before anything gets built.
+                </p>
+              </div>
+              <div class="step rise" style="transition-delay: 0.16s">
+                <h3>We build it</h3>
+                <p>
+                  Real content, real photos, real page structure — the site arrives finished,
+                  not as a template waiting for someone to fill it in.
+                </p>
+              </div>
+              <div class="step rise" style="transition-delay: 0.24s">
+                <h3>Your staff takes over</h3>
+                <p>
+                  You get the dashboard and the keys. Update anything, any time. We stay on
+                  call for the parts you&rsquo;d rather not touch.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ closer ============ -->
+        <section class="band" id="start" style="padding-top: 0">
+          <div class="shell">
+            <div class="closer rise">
+              <h2>Your practice deserves better than a PDF of your hours.</h2>
+              <p class="sub">
+                Walk through both demos, open the admin, break something on purpose. When you
+                know which direction you want, we start from there.
+              </p>
+              <div class="hero-actions">
+                <a href="#demos" class="btn btn-solid">Open the demos</a>
+                <a href="./south-texas/admin/dashboard/" class="btn btn-ghost"
+                  >Try the dashboard</a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ============ footer ============ -->
+      <footer>
+        <div class="shell foot-inner">
+          <a href="#top" class="wordmark" style="font-size: 0.98rem">
+            <span class="mark" aria-hidden="true" style="width: 26px; height: 26px; border-radius: 8px">
+              <svg width="14" height="14" viewBox="0 0 32 32" fill="none">
+                <path d="M13.6 6h4.8v7.6H26v4.8h-7.6V26h-4.8v-7.6H6v-4.8h7.6z" fill="#FFFFFA" />
+              </svg>
+            </span>
+            <span>MedWebDev</span>
+          </a>
+          <div class="foot-links">
+            <a href="#demos">Demos</a>
+            <a href="#included">Included</a>
+            <a href="#process">Process</a>
+          </div>
+          <p>&copy; <span id="year">2026</span> MedWebDev. Demo practices are fictional.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Footer year
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Header goes glass once you leave the fold
+      const topbar = document.getElementById("topbar");
+      const onScroll = () => topbar.classList.toggle("stuck", window.scrollY > 24);
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      // Reveal on enter.
+      // Deliberately a per-frame position check rather than IntersectionObserver:
+      // an observer with a threshold can skip an element entirely on a fast or
+      // programmatic jump, and a .rise that never fires stays invisible forever.
+      // This re-checks every remaining element on each scroll frame, so nothing
+      // can slip past — worst case it lights one frame later.
+      const risers = Array.prototype.slice.call(document.querySelectorAll(".rise"));
+      let queued = false;
+
+      function lightVisible() {
+        queued = false;
+        const limit = window.innerHeight - 40;
+        for (let i = risers.length - 1; i >= 0; i--) {
+          if (risers[i].getBoundingClientRect().top < limit) {
+            risers[i].classList.add("lit");
+            risers.splice(i, 1);
+          }
+        }
+      }
+
+      function schedule() {
+        if (!queued) {
+          queued = true;
+          requestAnimationFrame(lightVisible);
+        }
+      }
+
+      lightVisible();
+      window.addEventListener("scroll", schedule, { passive: true });
+      window.addEventListener("resize", schedule, { passive: true });
+      window.addEventListener("load", schedule);
+
+      // Scale each live preview so the desktop-width render exactly fills its
+      // frame at any card width — otherwise a fixed factor leaves a gutter.
+      const PREVIEW_WIDTH = 1280;
+      function fitPreviews() {
+        document.querySelectorAll(".viewport").forEach((vp) => {
+          const frame = vp.querySelector("iframe");
+          if (!frame || !vp.clientWidth) return;
+          const scale = vp.clientWidth / PREVIEW_WIDTH;
+          frame.style.transform = "scale(" + scale + ")";
+          frame.style.height = vp.clientHeight / scale + "px";
+        });
+      }
+      fitPreviews();
+      window.addEventListener("load", fitPreviews);
+      if ("ResizeObserver" in window) {
+        const ro = new ResizeObserver(fitPreviews);
+        document.querySelectorAll(".viewport").forEach((vp) => ro.observe(vp));
+      } else {
+        window.addEventListener("resize", fitPreviews, { passive: true });
+      }
+
+      // Demo cards catch the cursor
+      document.querySelectorAll(".demo").forEach((card) => {
+        card.addEventListener("pointermove", (ev) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty("--mx", ev.clientX - r.left + "px");
+          card.style.setProperty("--my", ev.clientY - r.top + "px");
+        });
+      });
+    </script>
+  </body>
+</html>
