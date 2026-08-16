@@ -9,6 +9,7 @@
 // with `home` linking to "/" and everything else to "/page/<slug>".
 
 import { asset } from '@/asset';
+import { PAGE_SLUGS } from '@/routes';
 
 export interface Page {
   id: number;
@@ -45,6 +46,8 @@ export type PageInputTemplate =
 const CREATED = '2003-04-12T09:00:00.000Z';
 const UPDATED = '2026-02-18T15:30:00.000Z';
 
+// ids and slugs come from the shared route manifest, which vite.config.ts
+// also reads to emit a real index.html per route.
 export const DEMO_PAGES: Page[] = [
   {
     id: 1,
@@ -211,3 +214,15 @@ export const DEMO_PAGES: Page[] = [
     updatedAt: UPDATED
   }
 ];
+
+// Fail loudly at build/dev time if the content and the route manifest diverge —
+// a mismatch would silently ship a page with no static shell behind it.
+if (
+  DEMO_PAGES.length !== PAGE_SLUGS.length ||
+  DEMO_PAGES.some((p, i) => p.slug !== PAGE_SLUGS[i] || p.id !== i + 1)
+) {
+  throw new Error(
+    'demo-content.ts and routes.ts disagree: every page must match PAGE_SLUGS ' +
+      'in order, with 1-based ids.'
+  );
+}

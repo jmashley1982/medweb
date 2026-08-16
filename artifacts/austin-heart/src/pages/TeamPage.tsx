@@ -38,10 +38,14 @@ export function TeamPage() {
   return (
     <PublicLayout>
       <div className="w-full h-[500px] overflow-hidden relative">
+        {/* The source is 16:9 in a much wider 500px band, so object-cover only
+            shows about half its height. Centering starts that window at the
+            hairlines; anchoring near the top keeps every face in frame from
+            tablet widths up to ultrawide. */}
         <img
           src={asset("images/team-group.jpg")}
           alt="Our Team"
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-[50%_15%]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 max-w-6xl mx-auto">

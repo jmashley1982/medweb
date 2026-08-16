@@ -33,7 +33,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex gap-8 h-full">
+          <nav className="hidden md:flex items-center gap-8 h-full">
             {navItems.map((item) => {
               const isActive = location === item.href;
               return (
@@ -48,6 +48,13 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               );
             })}
+            {/* Demo affordance: makes the CMS findable without being told. */}
+            <Link
+              href="/admin"
+              className="text-sm font-semibold rounded-full border border-accent-gold px-4 py-1.5 text-accent-gold transition-colors hover:bg-accent-gold hover:text-white"
+            >
+              Admin
+            </Link>
           </nav>
 
           {/* Mobile hamburger */}
@@ -81,6 +88,13 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
                   </Link>
                 );
               })}
+              <Link
+                href="/admin"
+                onClick={() => setMobileOpen(false)}
+                className="px-6 py-4 text-base font-semibold border-l-4 border-transparent text-accent-gold hover:bg-slate-50"
+              >
+                Admin
+              </Link>
               <div className="px-6 py-4 border-t border-border mt-2">
                 <a
                   href="tel:+15125550192"
