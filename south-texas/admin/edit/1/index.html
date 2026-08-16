@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit: Home – STVE Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --green-dark: #1B5E44;
+      --green-mid:  #2E9E68;
+      --green-light:#E8F5EF;
+      --green-pale: #F4FAF7;
+      --text-dark:  #1A2E24;
+      --text-mid:   #4A6457;
+      --text-light: #7A9A8A;
+      --white:      #FFFFFF;
+      --border:     #D4E8DC;
+      --font: 'Inter', sans-serif;
+    }
+    body { font-family: var(--font); background: #EDF5EF; color: var(--text-dark); min-height: 100vh; }
+
+    .topbar {
+      background: var(--green-dark);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .topbar-left img { height: 36px; width: auto; border-radius: 6px; object-fit: contain; }
+    .topbar-title { color: #fff; font-weight: 700; font-size: 1rem; }
+    .topbar-crumb { color: rgba(255,255,255,0.5); font-size: 0.87rem; }
+    .topbar-crumb a { color: rgba(255,255,255,0.65); text-decoration: none; }
+    .topbar-crumb a:hover { color: #fff; }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+    .tbtn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 18px; border-radius: 999px; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; border: none; font-family: var(--font);
+      transition: all 0.2s;
+    }
+    .tbtn-white { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25); }
+    .tbtn-white:hover { background: rgba(255,255,255,0.25); color: #fff; }
+    .tbtn-ghost { background: transparent; color: rgba(255,255,255,0.7); }
+    .tbtn-ghost:hover { color: #fff; }
+
+    .page-wrap { max-width: 960px; margin: 0 auto; padding: 40px 28px; }
+
+    .page-title-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 32px; }
+    .page-title-row h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-dark); }
+    .page-title-row p { color: var(--text-mid); font-size: 0.95rem; margin-top: 4px; }
+    .slug-pill { background: var(--green-light); color: var(--green-dark); padding: 6px 16px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; font-family: 'Courier New', monospace; }
+
+    .alert { padding: 14px 20px; border-radius: 12px; font-size: 0.95rem; margin-bottom: 20px; font-weight: 500; }
+    .alert-success { background: #D1FAE5; border: 1px solid #6EE7B7; color: #065F46; }
+    .alert-error   { background: #FEF2F2; border: 1px solid #FCA5A5; color: #B91C1C; }
+
+    .card {
+      background: var(--white);
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      margin-bottom: 24px;
+    }
+    .card-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      background: var(--green-pale);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-header-icon { font-size: 1.3rem; }
+    .card-header h2 { font-size: 1.05rem; font-weight: 700; color: var(--text-dark); }
+    .card-header p { font-size: 0.84rem; color: var(--text-light); margin-top: 2px; }
+    .card-body { padding: 28px; }
+
+    .form-grid { display: grid; gap: 20px; }
+    .form-grid-2 { grid-template-columns: 1fr 1fr; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-group label { font-size: 0.88rem; font-weight: 600; color: var(--text-dark); }
+    .form-group input, .form-group textarea {
+      padding: 12px 16px;
+      font-size: 1rem;
+      font-family: var(--font);
+      border: 2px solid #D0DDD7;
+      border-radius: 12px;
+      outline: none;
+      color: var(--text-dark);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--green-mid); box-shadow: 0 0 0 4px rgba(46,158,104,0.1); }
+    .form-group textarea { min-height: 160px; resize: vertical; line-height: 1.65; }
+    .field-hint { font-size: 0.8rem; color: var(--text-light); }
+    .btn-save {
+      background: var(--green-dark);
+      color: #fff;
+      border: none;
+      padding: 13px 32px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: var(--font);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 12px rgba(27,94,68,0.25);
+    }
+    .btn-save:hover { background: var(--green-mid); transform: translateY(-1px); }
+
+    .upload-zone {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--green-pale);
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 18px 22px;
+      transition: border-color 0.2s;
+    }
+    .upload-zone:hover { border-color: var(--green-mid); }
+    .upload-zone input[type="file"] { flex: 1; font-size: 0.93rem; font-family: var(--font); }
+    .btn-upload {
+      background: var(--green-mid);
+      color: #fff;
+      border: none;
+      padding: 10px 24px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: var(--font);
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .btn-upload:hover { background: var(--green-dark); }
+
+    .media-preview {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .media-item {
+      background: var(--green-pale);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .media-item-img { width: 100%; height: 160px; object-fit: cover; }
+    .media-item-body { padding: 12px 14px; }
+    .media-item-label { font-size: 0.8rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .media-item-path { font-size: 0.82rem; color: var(--text-mid); font-family: 'Courier New', monospace; word-break: break-all; }
+    .media-item-path a { color: var(--green-mid); }
+    .media-none { color: var(--text-light); font-size: 0.92rem; font-style: italic; }
+
+    @media (max-width: 640px) {
+      .topbar { padding: 0 16px; }
+      .page-wrap { padding: 20px 16px; }
+      .form-grid-2 { grid-template-columns: 1fr; }
+      .card-body { padding: 20px; }
+      .upload-zone { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="/medweb/south-texas/logo.png" alt="STVE" onerror="this.style.display='none'">
+      <div>
+        <div class="topbar-title">South Texas Vascular</div>
+        <div class="topbar-crumb"><a href="/medweb/south-texas/admin/dashboard">Dashboard</a> / Editing Home</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <a href="/medweb/south-texas/home" target="_blank" class="tbtn tbtn-white">↗ View Page</a>
+      <a href="/medweb/south-texas/admin/dashboard" class="tbtn tbtn-ghost">← Dashboard</a>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+    <div class="page-title-row">
+      <div>
+        <h1>Editing: Home</h1>
+        <p>Update content, images, or media. Changes go live immediately after saving.</p>
+      </div>
+      <span class="slug-pill">/home</span>
+    </div>
+
+    
+    
+    
+
+    <!-- TEXT CONTENT -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-icon">✏️</span>
+        <div>
+          <h2>Text Content</h2>
+          <p>Update navigation title, hero heading, and body text.</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <form action="/medweb/south-texas/admin/edit/1" method="POST">
+          <div class="form-grid" style="margin-bottom:20px;">
+            <div class="form-group">
+              <label for="title">Navigation Title <span style="color:#9CA3AF;font-weight:400;">(shown in menu)</span></label>
+              <input type="text" id="title" name="title" value="Home">
+            </div>
+            <div class="form-group">
+              <label for="header">Hero Heading <span style="color:#9CA3AF;font-weight:400;">(large title in hero section)</span></label>
+              <input type="text" id="header" name="header" value="Expert Vascular Care You Can Trust">
+            </div>
+            <div class="form-group">
+              <label for="heroSubtitle">Hero Subtitle <span style="color:#9CA3AF;font-weight:400;">(small line below heading)</span></label>
+              <input type="text" id="heroSubtitle" name="heroSubtitle" value="Serving San Antonio and South Texas with compassionate, minimally invasive vascular treatments for over 20 years." placeholder="e.g. Caring for South Texas since 2004">
+            </div>
+            <div class="form-group">
+              <label for="image">Hero Image URL <span style="color:#9CA3AF;font-weight:400;">(or upload below)</span></label>
+              <input type="text" id="image" name="image" value="/uploads/clinic-building.png" placeholder="/uploads/your-image.jpg">
+            </div>
+            <div class="form-group">
+              <label for="video">Video URL <span style="color:#9CA3AF;font-weight:400;">(optional)</span></label>
+              <input type="text" id="video" name="video" value="" placeholder="/uploads/your-video.mp4">
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:24px;">
+            <label for="body">Body Text <span style="color:#9CA3AF;font-weight:400;">(use blank lines for new paragraphs)</span></label>
+            <textarea id="body" name="body" rows="10">Dr. Edwardo Gutierrez and his dedicated team provide comprehensive, compassionate vascular care for the entire family. We specialize in the diagnosis and treatment of circulatory diseases, using the latest minimally invasive techniques to ensure the best outcomes for our patients.
+
+As a leading vascular surgery practice in San Antonio, we accept most major insurance plans and offer flexible scheduling to fit your life. New patient appointments are typically available within one week.</textarea>
+          </div>
+          <button type="submit" class="btn-save">Save Changes</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- UPLOAD IMAGE -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-icon">🖼️</span>
+        <div>
+          <h2>Hero Image</h2>
+          <p>Upload a new image — it replaces the current hero background automatically.</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <form action="/medweb/south-texas/admin/upload/image/1" method="POST" enctype="multipart/form-data">
+          <div class="upload-zone">
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit" class="btn-upload">Upload Image</button>
+          </div>
+        </form>
+        <div class="media-preview">
+          
+            <div class="media-item">
+              <img src="/medweb/south-texas/uploads/clinic-building.png" alt="Hero image" class="media-item-img">
+              <div class="media-item-body">
+                <div class="media-item-label">Current Hero Image</div>
+                <div class="media-item-path"><a href="/medweb/south-texas/uploads/clinic-building.png" target="_blank">/uploads/clinic-building.png</a></div>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- UPLOAD VIDEO -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-icon">🎬</span>
+        <div>
+          <h2>Video</h2>
+          <p>Optional video embed shown in the page content area.</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <form action="/medweb/south-texas/admin/upload/video/1" method="POST" enctype="multipart/form-data">
+          <div class="upload-zone">
+            <input type="file" name="video" accept="video/*" required>
+            <button type="submit" class="btn-upload">Upload Video</button>
+          </div>
+        </form>
+        
+          <p class="media-none" style="margin-top:16px;">No video set for this page.</p>
+        
+      </div>
+    </div>
+
+  </div>
+
+  <script>window.__DEMO_BASE__="/medweb/south-texas";</script><script src="/medweb/south-texas/demo-mode.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About – South Texas Vascular Experts</title>
+  <link rel="stylesheet" href="/medweb/south-texas/style.css">
+  <link rel="icon" href="/medweb/south-texas/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ============ HEADER / NAV ============ -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner container">
+      <a href="/medweb/south-texas/home" class="logo-link">
+        <div class="logo-wrap"><img src="/medweb/south-texas/logo.png" alt="South Texas Vascular Experts" class="logo" onerror="this.parentElement.style.display='none'"></div>
+        <div class="brand-text">
+          <span class="brand-name">South Texas</span>
+          <span class="brand-sub">Vascular Experts</span>
+        </div>
+      </a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav">
+        <ul>
+          
+            
+            
+              <li><a href="/medweb/south-texas/about" class="active">About</a></li>
+            
+              <li><a href="/medweb/south-texas/contact" class="">Contact</a></li>
+            
+              <li><a href="/medweb/south-texas/patient-resources" class="">Patient Resources</a></li>
+            
+              <li><a href="/medweb/south-texas/services" class="">Services</a></li>
+            
+              <li><a href="/medweb/south-texas/staff" class="">Staff</a></li>
+            
+          
+          
+            <li><a href="/medweb/south-texas/admin/dashboard" class="nav-admin-link">⚙ Admin</a></li>
+          
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  
+    <section class="hero has-image" style="--hero-img: url('/medweb/south-texas/uploads/dr-gutierrez.png')">
+      <div class="hero-overlay"></div>
+      <div class="hero-content container">
+        <div class="hero-badge">South Texas Vascular Experts</div>
+        <h1 class="hero-title">About Dr. Edwardo Gutierrez, M.D.</h1>
+        
+          <p class="hero-subtitle">Board-certified vascular surgeon with over two decades of surgical excellence.</p>
+        
+        
+      </div>
+      <div class="hero-scroll-hint">
+        <span></span>
+      </div>
+    </section>
+  
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main>
+
+    
+
+      <!-- ===== STAFF PAGE ===== -->
+      
+        <section class="section section-white">
+          <div class="container">
+            
+            <div class="page-body-card">
+              Dr. Gutierrez is a board-certified vascular surgeon with over 20 years of experience in treating arterial and venous disorders. He earned his medical degree from the University of Texas Health Science Center and completed his residency at Baylor College of Medicine, followed by a vascular surgery fellowship at the renowned Mayo Clinic.<br><br>Dr. Gutierrez is committed to patient-centered care, combining clinical excellence with a warm, approachable manner. He is an active member of the Society for Vascular Surgery, the American College of Surgeons, and serves on the medical advisory board for two regional hospitals in San Antonio.<br><br>Outside of medicine, Dr. Gutierrez is a passionate advocate for health literacy in underserved South Texas communities, regularly participating in free screening events and health education initiatives.
+            </div>
+          </div>
+        </section>
+      
+
+    
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-wrap"><img src="/medweb/south-texas/logo.png" alt="STVE Logo" class="footer-logo" onerror="this.parentElement.style.display='none'"></div>
+          <p class="footer-tagline">Compassionate vascular care for South Texas and beyond.</p>
+          <p class="footer-email-badge"><a href="mailto:jason@fauxmail.com">jason@fauxmail.com</a></p>
+        </div>
+        <div class="footer-links-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/medweb/south-texas/home">Home</a></li>
+            <li><a href="/medweb/south-texas/about">About</a></li>
+            <li><a href="/medweb/south-texas/services">Services</a></li>
+            <li><a href="/medweb/south-texas/staff">Staff</a></li>
+          </ul>
+        </div>
+        <div class="footer-links-col">
+          <h4>Patient Info</h4>
+          <ul>
+            <li><a href="/medweb/south-texas/patient-resources">Patient Resources</a></li>
+            <li><a href="/medweb/south-texas/contact">Contact Us</a></li>
+            <li><a href="/medweb/south-texas/terms">Terms of Service</a></li>
+            <li><a href="/medweb/south-texas/privacy">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact-col">
+          <h4>Contact</h4>
+          <p>123 Medical Park Drive, Suite 200<br>San Antonio, TX 78229</p>
+          <p><strong>(555) 123-4567</strong></p>
+          <p>Mon–Fri: 8:00 AM – 5:00 PM</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 South Texas Vascular Experts. All rights reserved. | Dr. Edwardo Gutierrez, M.D.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky header on scroll
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    });
+    // Mobile nav toggle
+    const toggle = document.getElementById('nav-toggle');
+    const nav = document.getElementById('main-nav');
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      toggle.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

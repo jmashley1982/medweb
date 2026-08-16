@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – South Texas Vascular Experts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --green-dark: #1B5E44;
+      --green-mid:  #2E9E68;
+      --green-light:#E8F5EF;
+      --green-pale: #F4FAF7;
+      --text-dark:  #1A2E24;
+      --text-mid:   #4A6457;
+      --text-light: #7A9A8A;
+      --white:      #FFFFFF;
+      --border:     #D4E8DC;
+      --font: 'Inter', sans-serif;
+    }
+    body { font-family: var(--font); background: #EDF5EF; color: var(--text-dark); min-height: 100vh; }
+
+    /* ---- TOPBAR ---- */
+    .topbar {
+      background: var(--green-dark);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 12px; }
+    .topbar-brand img { height: 36px; width: auto; border-radius: 6px; object-fit: contain; }
+    .topbar-brand span { color: #fff; font-weight: 700; font-size: 1rem; }
+    .topbar-badge { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8); padding: 3px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px; }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+    .tbtn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 18px; border-radius: 999px; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; border: none; font-family: var(--font);
+      transition: all 0.2s;
+    }
+    .tbtn-white { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25); }
+    .tbtn-white:hover { background: rgba(255,255,255,0.25); color: #fff; }
+    .tbtn-green { background: var(--green-mid); color: #fff; box-shadow: 0 2px 8px rgba(46,158,104,0.4); }
+    .tbtn-green:hover { background: #28a870; color: #fff; }
+    .tbtn-ghost { background: transparent; color: rgba(255,255,255,0.7); }
+    .tbtn-ghost:hover { color: #fff; }
+
+    /* ---- PAGE BODY ---- */
+    .page-body { max-width: 1100px; margin: 0 auto; padding: 40px 28px; }
+
+    .page-heading { margin-bottom: 32px; }
+    .page-heading h1 { font-size: 1.9rem; font-weight: 800; color: var(--text-dark); }
+    .page-heading p { color: var(--text-mid); margin-top: 4px; font-size: 0.97rem; }
+
+    /* ---- STATS ---- */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 36px; }
+    .stat-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 22px 24px;
+      border: 1px solid var(--border);
+    }
+    .stat-num { font-size: 2.2rem; font-weight: 800; color: var(--green-dark); line-height: 1; }
+    .stat-label { font-size: 0.83rem; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 6px; }
+
+    /* ---- ALERTS ---- */
+    .alert { padding: 14px 20px; border-radius: 12px; font-size: 0.95rem; margin-bottom: 20px; font-weight: 500; }
+    .alert-success { background: #D1FAE5; border: 1px solid #6EE7B7; color: #065F46; }
+    .alert-error   { background: #FEF2F2; border: 1px solid #FCA5A5; color: #B91C1C; }
+
+    /* ---- TABLE CARD ---- */
+    .table-card {
+      background: var(--white);
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .table-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .table-card-header h2 { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); }
+    .table-card-header p { font-size: 0.87rem; color: var(--text-light); margin-top: 2px; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      background: var(--green-pale);
+      padding: 13px 20px;
+      text-align: left;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody tr { transition: background 0.15s; }
+    tbody tr:hover { background: var(--green-pale); }
+    tbody tr:not(:last-child) { border-bottom: 1px solid #EEF5EF; }
+    tbody td { padding: 16px 20px; font-size: 0.96rem; vertical-align: middle; }
+    .page-title-cell strong { font-weight: 600; color: var(--text-dark); }
+    .page-title-cell span { display: block; font-size: 0.82rem; color: var(--text-light); margin-top: 2px; }
+    .slug-pill {
+      background: var(--green-light);
+      color: var(--green-dark);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: 'Courier New', monospace;
+    }
+    .actions-cell { display: flex; align-items: center; gap: 8px; }
+    .act-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 7px 16px; border-radius: 999px; font-size: 0.84rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; border: none; font-family: var(--font);
+      transition: all 0.18s;
+    }
+    .act-edit { background: #FEF9C3; color: #713F12; border: 1px solid #FDE047; }
+    .act-edit:hover { background: #FDE047; color: #713F12; }
+    .act-delete { background: #FEF2F2; color: #991B1B; border: 1px solid #FCA5A5; }
+    .act-delete:hover { background: #FCA5A5; color: #7F1D1D; }
+    .act-disabled { background: #F3F4F6; color: #9CA3AF; padding: 7px 16px; border-radius: 999px; font-size: 0.84rem; font-weight: 500; cursor: not-allowed; }
+    .act-view { background: var(--green-light); color: var(--green-dark); border: 1px solid #A7D9BE; }
+    .act-view:hover { background: #C6EED8; color: var(--green-dark); }
+
+    .table-footer { padding: 16px 20px; border-top: 1px solid var(--border); background: var(--green-pale); font-size: 0.87rem; color: var(--text-light); }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 640px) {
+      .topbar { padding: 0 16px; }
+      .topbar-badge { display: none; }
+      .page-body { padding: 24px 16px; }
+      thead th:nth-child(2) { display: none; }
+      tbody td:nth-child(2) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-brand">
+      <img src="/medweb/south-texas/logo.png" alt="STVE" onerror="this.style.display='none'">
+      <span>South Texas Vascular</span>
+      <span class="topbar-badge">CMS</span>
+    </div>
+    <div class="topbar-actions">
+      <a href="/medweb/south-texas/home" target="_blank" class="tbtn tbtn-white">↗ View Site</a>
+      <a href="/medweb/south-texas/admin/add" class="tbtn tbtn-green">+ New Page</a>
+      <a href="/medweb/south-texas/admin/logout" class="tbtn tbtn-ghost">Sign Out</a>
+    </div>
+  </div>
+
+  <div class="page-body">
+    <div class="page-heading">
+      <h1>Content Dashboard</h1>
+      <p>Manage all pages, text, images, and videos for your website.</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Total Pages</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Nav Pages</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Active Admin</div>
+      </div>
+    </div>
+
+    
+    
+
+    <div class="table-card">
+      <div class="table-card-header">
+        <div>
+          <h2>All Pages</h2>
+          <p>Click "Edit" to update content, images, or videos on any page.</p>
+        </div>
+        <a href="/medweb/south-texas/admin/add" class="tbtn tbtn-green">+ New Page</a>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Page</th>
+            <th>URL Slug</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td class="page-title-cell">
+              <strong>About</strong>
+              
+                <span>Core page</span>
+              
+            </td>
+            <td><span class="slug-pill">/about</span></td>
+            <td>
+              <div class="actions-cell">
+                <a href="/medweb/south-texas/about" target="_blank" class="act-btn act-view">↗ View</a>
+                <a href="/medweb/south-texas/admin/edit/2" class="act-btn act-edit">✎ Edit</a>
+                
+                  <form action="/medweb/south-texas/admin/delete/2" method="POST" onsubmit="return confirm('Permanently delete the "About" page?')">
+                    <button type="submit" class="act-btn act-delete">✕ Delete</button>
+                  </form>
+                
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="page-title-cell">
+              <strong>Contact</strong>
+              
+                <span>Core page</span>
+              
+            </td>
+            <td><span class="slug-pill">/contact</span></td>
+            <td>
+              <div class="actions-cell">
+                <a href="/medweb/south-texas/contact" target="_blank" class="act-btn act-view">↗ View</a>
+                <a href="/medweb/south-texas/admin/edit/6" class="act-btn act-edit">✎ Edit</a>
+                
+                  <form action="/medweb/south-texas/admin/delete/6" method="POST" onsubmit="return confirm('Permanently delete the "Contact" page?')">
+                    <button type="submit" class="act-btn act-delete">✕ Delete</button>
+                  </form>
+                
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="page-title-cell">
+              <strong>Home</strong>
+              
+                <span>Core page</span>
+              
+            </td>
+            <td><span class="slug-pill">/home</span></td>
+            <td>
+              <div class="actions-cell">
+                <a href="/medweb/south-texas/home" target="_blank" class="act-btn act-view">↗ View</a>
+                <a href="/medweb/south-texas/admin/edit/1" class="act-btn act-edit">✎ Edit</a>
+                
+                  <span class="act-disabled">Protected</span>
+                
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="page-title-cell">
+              <strong>Patient Resources</strong>
+              
+                <span>Core page</span>
+              
+            </td>
+            <td><span class="slug-pill">/patient-resources</span></td>
+            <td>
+              <div class="actions-cell">
+                <a href="/medweb/south-texas/patient-resources" target="_blank" class="act-btn act-view">↗ View</a>
+                <a href="/medweb/south-texas/admin/edit/4" class="act-btn act-edit">✎ Edit</a>
+                
+                  <form action="/medweb/south-texas/admin/delete/4" method="POST" onsubmit="return confirm('Permanently delete the "Patient Resources" page?')">
+                    <button type="submit" class="act-btn act-delete">✕ Delete</button>
+                  </form>
+                
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="page-title-cell">
+              <strong>Privacy Policy</strong>
+              
+                <span>Legal page</span>
+              
+            </td>
+            <td><span class="slug-pill">/privacy</span></td>
+            <td>
+              <div class="actions-cell">
+                <a href="/medweb/south-texas/privacy" target="_blank" class="act-btn act-view">↗ View</a>
+                <a href="/medweb/south-texas/admin/edit/8" class="act-btn act-edit">✎ Edit</a>
+                
+                  <form action="/medweb/south-texas/admin/delete/8" method="POST" onsubmit="return confirm('Permanently delete the "Privacy Policy" page?')">
+                    <button type="submit" class="act-btn act-delete">✕ Delete</button>
+                  </form>
+                
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="page-title-cell">
+              <strong>Services</strong>
+              
+                <span>Core page</span>
+              
+            </td>
+            <td><span class="slug-pill">/services</span></td>
+            <td>
+              <div class="actions-cell">
+                <a href="/medweb/south-texas/services" target="_blank" class="act-btn act-view">↗ View</a>
+                <a href="/medweb/south-texas/admin/edit/3" class="act-btn act-edit">✎ Edit</a>
+                
+                  <form action="/medweb/south-texas/admin/delete/3" method="POST" onsubmit="return confirm('Permanently delete the "Services" page?')">
+                    <button type="submit" class="act-btn act-delete">✕ Delete</button>
+                  </form>
+                
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="page-title-cell">
+              <strong>Staff</strong>
+              
+                <span>Core page</span>
+              
+            </td>
+            <td><span class="slug-pill">/staff</span></td>
+            <td>
+              <div class="actions-cell">
+                <a href="/medweb/south-texas/staff" target="_blank" class="act-btn act-view">↗ View</a>
+                <a href="/medweb/south-texas/admin/edit/5" class="act-btn act-edit">✎ Edit</a>
+                
+                  <form action="/medweb/south-texas/admin/delete/5" method="POST" onsubmit="return confirm('Permanently delete the "Staff" page?')">
+                    <button type="submit" class="act-btn act-delete">✕ Delete</button>
+                  </form>
+                
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="page-title-cell">
+              <strong>Terms of Service</strong>
+              
+                <span>Legal page</span>
+              
+            </td>
+            <td><span class="slug-pill">/terms</span></td>
+            <td>
+              <div class="actions-cell">
+                <a href="/medweb/south-texas/terms" target="_blank" class="act-btn act-view">↗ View</a>
+                <a href="/medweb/south-texas/admin/edit/7" class="act-btn act-edit">✎ Edit</a>
+                
+                  <form action="/medweb/south-texas/admin/delete/7" method="POST" onsubmit="return confirm('Permanently delete the "Terms of Service" page?')">
+                    <button type="submit" class="act-btn act-delete">✕ Delete</button>
+                  </form>
+                
+              </div>
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+
+      <div class="table-footer">
+        <strong>8</strong> pages total &nbsp;·&nbsp; Home page is protected and cannot be deleted
+      </div>
+    </div>
+  </div>
+
+  <script>window.__DEMO_BASE__="/medweb/south-texas";</script><script src="/medweb/south-texas/demo-mode.js" defer></script>
+</body>
+</html>

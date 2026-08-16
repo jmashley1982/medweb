@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login – South Texas Vascular Experts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --green-dark: #1B5E44;
+      --green-mid:  #2E9E68;
+      --green-light:#E8F5EF;
+      --text-dark:  #1A2E24;
+      --text-mid:   #4A6457;
+      --white:      #FFFFFF;
+      --font: 'Inter', sans-serif;
+    }
+    body {
+      font-family: var(--font);
+      background: linear-gradient(135deg, #0f3826 0%, var(--green-dark) 50%, #1a7a52 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .login-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 52px 48px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.28);
+    }
+    .login-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .login-logo img {
+      height: 48px;
+      width: auto;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    .login-logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .login-logo-name { font-size: 1rem; font-weight: 800; color: var(--green-dark); }
+    .login-logo-sub { font-size: 0.72rem; font-weight: 500; color: var(--text-mid); letter-spacing: 1px; text-transform: uppercase; }
+    .login-heading { font-size: 1.75rem; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
+    .login-sub { font-size: 0.97rem; color: var(--text-mid); margin-bottom: 32px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; }
+    .form-group label { font-size: 0.88rem; font-weight: 600; color: var(--text-dark); letter-spacing: 0.3px; }
+    .form-group input {
+      padding: 13px 18px;
+      font-size: 1rem;
+      font-family: var(--font);
+      border: 2px solid #D0DDD7;
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      color: var(--text-dark);
+    }
+    .form-group input:focus { border-color: var(--green-mid); box-shadow: 0 0 0 4px rgba(46,158,104,0.12); }
+    .btn-login {
+      width: 100%;
+      background: var(--green-dark);
+      color: #fff;
+      border: none;
+      padding: 15px;
+      font-size: 1.02rem;
+      font-weight: 700;
+      font-family: var(--font);
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(27,94,68,0.3);
+    }
+    .btn-login:hover { background: var(--green-mid); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(46,158,104,0.35); }
+    .error-box {
+      background: #FEF2F2;
+      border: 1px solid #FCA5A5;
+      border-left: 4px solid #EF4444;
+      color: #B91C1C;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 0.93rem;
+      margin-bottom: 20px;
+    }
+    .hint {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.82rem;
+      color: #9AB0A6;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 16px;
+      color: var(--green-mid);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .back-link:hover { color: var(--green-dark); }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="/medweb/south-texas/logo.png" alt="STVE Logo" onerror="this.style.display='none'">
+      <div class="login-logo-text">
+        <span class="login-logo-name">South Texas Vascular</span>
+        <span class="login-logo-sub">Content Management</span>
+      </div>
+    </div>
+
+    <h1 class="login-heading">Welcome back</h1>
+    <p class="login-sub">Sign in to manage your website content.</p>
+
+    
+
+    <form action="/medweb/south-texas/admin/login" method="POST">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" autocomplete="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn-login">Sign In →</button>
+    </form>
+
+    <p class="hint">admin / vibe123</p>
+    <a href="/medweb/south-texas/home" class="back-link">← Back to website</a>
+  </div>
+  <script>window.__DEMO_BASE__="/medweb/south-texas";</script><script src="/medweb/south-texas/demo-mode.js" defer></script>
+</body>
+</html>
