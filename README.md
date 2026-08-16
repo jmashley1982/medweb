@@ -16,6 +16,7 @@ admin screens included.
 | `build-static.mjs` | Prerenders that Express app to flat HTML |
 | `sites/austin-heart/` | Austin Heart & Associates — React + Vite |
 | `build-site.mjs` | Assembles all three into one deployable `dist/` |
+| `archive/` | Superseded work, kept not deleted |
 
 ## Building
 
