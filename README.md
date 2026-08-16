@@ -56,8 +56,17 @@ nothing is ever saved.
 Everything lives on `main`, in this repository on GitHub. That never changes —
 GitHub is where the code and the build live.
 
-The **public site is Cloudflare Pages**, connected to this repo. Pushing to
-`main` triggers a Cloudflare build and publishes it. Nothing else to run.
+The **public site is Cloudflare**, connected to this repo:
+
+**https://medweb.jmashley1982.workers.dev**
+
+Pushing to `main` triggers a Cloudflare build and publishes it. Nothing else
+to run.
+
+Cloudflare's Git integration created this as a Worker serving static assets
+rather than a classic Pages project — hence the `workers.dev` address rather
+than `pages.dev`. It makes no difference to how the site is built or served;
+`dist/` is uploaded as static files either way.
 
 Its build settings:
 
@@ -94,7 +103,6 @@ deleting it is not needed and not reversible.
 - GitHub Pages publishing retired
 
 **Next**
-- Record the live `.pages.dev` address here once it's confirmed
 - Switch *Settings → Pages → Source* to **None** to retire the old
   `jmashley1982.github.io/medweb` address, which is now frozen
 - Decide whether the landing page should be indexable — it currently carries
