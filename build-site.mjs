@@ -58,7 +58,10 @@ async function main() {
 
   // ---- Landing page -------------------------------------------------
   await fs.copyFile(path.join(ROOT, 'index.html'), path.join(DIST, 'index.html'));
-  console.log('▸ Landing page copied');
+  // Only a robots.txt at the domain root is ever read, so this one governs the
+  // whole site — including the demos, which must stay out of search results.
+  await fs.copyFile(path.join(ROOT, 'robots.txt'), path.join(DIST, 'robots.txt'));
+  console.log('▸ Landing page and robots.txt copied');
 
   // ---- Demo A: South Texas Vascular (Express + EJS, prerendered) -----
   run('Build South Texas Vascular', process.execPath, ['build-static.mjs'], {

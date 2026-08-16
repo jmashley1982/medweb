@@ -1,0 +1,15 @@
+# The MedWebDev landing page is meant to be found. Everything not listed
+# below is fair game for search engines.
+#
+# The two demo practices are not. South Texas Vascular Experts and Austin
+# Heart & Associates are fictional — invented doctors, invented addresses,
+# invented phone numbers. Indexed, they would surface to people searching for
+# real vascular or cardiac care in San Antonio and Austin. Nobody should find
+# a fake clinic while looking for a real one.
+#
+# This also keeps the demo admin dashboards out of search results, which is
+# reason enough on its own.
+
+User-agent: *
+Disallow: /south-texas/
+Disallow: /austin-heart/

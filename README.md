@@ -17,6 +17,7 @@ admin screens included.
 | `sites/austin-heart/` | Austin Heart & Associates — React + Vite |
 | `build-site.mjs` | Assembles all three into one deployable `dist/` |
 | `wrangler.jsonc` | Tells Cloudflare to serve `dist/` as static files |
+| `robots.txt` | Landing page indexable, demo practices not |
 | `archive/` | Superseded work, kept not deleted |
 
 ## Building
@@ -105,6 +106,7 @@ deleting it is not needed and not reversible.
 
 **Done**
 - Landing page redesigned as MedWebDev, on the five-colour brand palette
+- Landing page open to search engines; demo practices kept out of them
 - Both demo sites building from one command
 - Everything consolidated onto `main` from four scattered branches
 - Cloudflare Pages connected; pushing to `main` publishes the public site
@@ -113,8 +115,6 @@ deleting it is not needed and not reversible.
 **Next**
 - Switch *Settings → Pages → Source* to **None** to retire the old
   `jmashley1982.github.io/medweb` address, which is now frozen
-- Decide whether the landing page should be indexable — it currently carries
-  `<meta name="robots" content="noindex">`, so search engines skip it
 - Three superseded branches (`claude/*`, `austin-heart`) can be deleted from
   the repo's Branches page. Their unique code is already saved in `archive/`.
   Do not delete `gh-pages` casually — it still serves the old address.
